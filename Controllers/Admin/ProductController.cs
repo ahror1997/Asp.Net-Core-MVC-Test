@@ -18,7 +18,7 @@ namespace Test.Controllers.Admin
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("")] //admin/product
         [Route("[action]")]
         public IActionResult Index()
         {
