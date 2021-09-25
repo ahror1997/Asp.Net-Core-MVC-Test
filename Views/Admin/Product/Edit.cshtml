@@ -1,0 +1,27 @@
+﻿@model Test.Models.Product
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Edit a product";
+}
+
+<h2>Edit product</h2>
+
+<form asp-controller="Product" asp-action="Update" asp-route-id="@Model.Id" autocomplete="off">
+    <div class="form-group">
+        <label asp-for="CategoryId" class="control-label"></label>
+        <input type="number" asp-for="CategoryId" value="@Model.CategoryId" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input type="text" asp-for="Name" value="@Model.Name" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input type="text" asp-for="Price" value="@Model.Price" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-dark">Update</button>
+    </div>
+</form>

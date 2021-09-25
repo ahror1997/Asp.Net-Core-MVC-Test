@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Test.Models.Product>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Products List";
+}
+
+<div>
+    <h2>All products list</h2>
+    <p style="text-align:right;margin-right:20px;">
+        <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Create">Add Product</a>
+    </p>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>CategoryId</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Id</td>
+            <td>@product.Name</td>
+            <td>@product.Price</td>
+            <td>@product.CategoryId</td>
+            <td>
+                <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id">edit</a>
+                <br />
+                <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id">delete</a>
+            </td>
+        </tr>
+    }
+</table>
