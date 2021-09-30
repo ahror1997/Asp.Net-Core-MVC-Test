@@ -18,8 +18,8 @@ namespace Test.Controllers.Admin
         }
 
         [HttpGet]
-        [Route("")] //admin/product
-        [Route("[action]")]
+        [Route("")] // admin/product
+        [Route("[action]")] // admin/product/index
         public IActionResult Index()
         {
             var categories = context.Products.ToList();
@@ -43,7 +43,16 @@ namespace Test.Controllers.Admin
         }
 
         [HttpGet]
-        [Route("[action]")]
+        [Route("[action]/{id}")]
+        public IActionResult Show(int Id)
+        {
+            Product product = context.Products.Find(Id);
+            ViewData["product"] = product;
+            return View("Views/Admin/Product/Show.cshtml");
+        }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
         public IActionResult Edit(int Id)
         {
             Product product = context.Products.Find(Id);

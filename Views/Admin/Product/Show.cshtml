@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Show product details";
+    var product = ViewData["product"] as Product;
+}
+<h2>Details</h2>
+
+<div>
+    <p>@product.Id</p>
+    <p>@product.Name</p>
+    <p>@product.Price</p>
+    <p>@product.CategoryId</p>
+</div>
