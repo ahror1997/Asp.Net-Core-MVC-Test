@@ -42,6 +42,9 @@ namespace Test.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Photo")
+                        .HasColumnType("longtext");
+
                     b.Property<double>("Price")
                         .HasColumnType("double");
 

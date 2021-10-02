@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Test.Models;
 
 namespace Test.Controllers.Admin
@@ -11,10 +11,12 @@ namespace Test.Controllers.Admin
     public class ProductController : Controller
     {
         private readonly ApplicationContext context;
+        IWebHostEnvironment appEnvironment;
 
-        public ProductController(ApplicationContext _context)
+        public ProductController(ApplicationContext _context, IWebHostEnvironment _appEnvironment)
         {
             context = _context;
+            appEnvironment = _appEnvironment;
         }
 
         [HttpGet]
@@ -35,8 +37,21 @@ namespace Test.Controllers.Admin
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult Store(Product product)
+        public IActionResult Store(Product product, IFormFile photo)
         {
+            // file upload
+            if (photo != null)
+            {
+                // путь к папке Files
+                string path = "/uploads/" + photo.FileName;
+                // сохраняем файл в папку Files в каталоге wwwroot
+                using (var fileStream = new FileStream(appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    photo.CopyTo(fileStream);
+                }
+                product.Photo = photo.FileName;
+            }
+
             context.Products.Add(product);
             context.SaveChanges();
             return RedirectToAction("Index");
@@ -47,8 +62,14 @@ namespace Test.Controllers.Admin
         public IActionResult Show(int Id)
         {
             Product product = context.Products.Find(Id);
-            ViewData["product"] = product;
-            return View("Views/Admin/Product/Show.cshtml");
+            if (product != null)
+            {
+                ViewData["product"] = product;
+                return View("Views/Admin/Product/Show.cshtml");
+            }
+            return RedirectToAction("Index");
+
+
         }
 
         [HttpGet]
