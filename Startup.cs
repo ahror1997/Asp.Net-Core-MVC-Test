@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Test.Middlewares;
 using Test.Models;
 
 namespace Test
@@ -30,6 +31,9 @@ namespace Test
             services.AddDbContextPool<ApplicationContext>(options => options.UseMySql(mySqlConnectionStr,
                 ServerVersion.AutoDetect(mySqlConnectionStr)));
             services.AddControllersWithViews();
+
+            // make routings lowercase
+            services.AddRouting(options => options.LowercaseUrls = true);
 
             // установка конфигурации подключения
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -52,6 +56,9 @@ namespace Test
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCulture();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

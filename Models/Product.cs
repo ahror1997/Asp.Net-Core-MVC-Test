@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Test.Models
 {
@@ -19,7 +20,9 @@ namespace Test.Models
         [Range(1, 100)]
         public int CategoryId { get; set; }
 
-        [Required]
         public string Photo { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

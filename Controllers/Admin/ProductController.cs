@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.IO;
 using System.Linq;
 using Test.Models;
@@ -54,6 +55,8 @@ namespace Test.Controllers.Admin
                 product.Photo = photo.FileName;
             }
 
+            product.CreatedAt = DateTime.Now;
+
             context.Products.Add(product);
             context.SaveChanges();
             return RedirectToAction("Index");
@@ -86,6 +89,7 @@ namespace Test.Controllers.Admin
         [Route("[action]")]
         public IActionResult Update(Product product)
         {
+            product.UpdatedAt = DateTime.Now;
             context.Products.Update(product);
             context.SaveChanges();
             return RedirectToAction("Index");
